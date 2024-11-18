@@ -1,0 +1,20 @@
+services:
+  backend:
+    build:
+      context: .
+    command: bundle exec rails s -b '0.0.0.0'
+    env_file:
+      - web.env
+    volumes:
+      - .:/myapp
+    ports:
+      - "3000:3000"
+
+  db:
+    image: mysql:8.3.0-oracle
+    environment:
+      MYSQL_ROOT_PASSWORD: 12345678
+    ports:
+      - 3315:3306
+    volumes:
+      - .:/myapp
