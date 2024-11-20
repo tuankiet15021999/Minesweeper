@@ -1,0 +1,136 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS (and SCSS, if configured) file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+ @import "bootstrap";
+
+/* Form CSS */
+a {
+  text-decoration: unset;
+}
+body {
+  background-color: whitesmoke;
+}
+
+h1 {
+  text-align: center;
+  margin: 20px 0;
+  color: #343a40;
+}
+
+form {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+  background: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+}
+
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="number"]:focus {
+  border-color: lightblue;
+  outline: none;
+}
+
+#error_explanation ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+#error_explanation li {
+  margin-bottom: 5px;
+}
+
+#home-link {
+  max-width: 500px;
+  margin: 10px auto;
+}
+
+#home-link a{
+  font-size: 20px;
+}
+/* List Board CSS */
+table {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.table td,
+.table th {
+  vertical-align: middle;
+  text-align: center;
+}
+
+.table td a {
+  font-weight: bold;
+}
+
+.btn-success {
+  font-weight: bold;
+  font-size: 14px;
+}
+
+/*Detail Board CSS*/
+.card-header {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.card-header a i:hover {
+  color: #000;
+}
+
+.card-body p {
+  margin: 0.5em 0;
+}
+.board-game-container {
+  width: 100vw;
+  overflow: scroll;
+}
+#board-game-table {
+  width: max-content;
+}
+#board-game-table td{
+  width: 34px;
+  height: 42px;
+}
+#board-game-table thead, tbody, tfoot, tr, td, th{
+  border-collapse: none;
+  border-width: 1px;
+}
+
+td.bomb-cell {
+  background-color: lightgray;
+}
+td.cell:hover {
+  background-color: lightgray;
+}
+
+/* Pagination */
+.pagination span a {
+  padding: 10px;
+  text-decoration: unset;
+}
+.page.current {
+  padding-left: 10px;
+  padding-right: 10px;
+  background-color: lightgray;
+}

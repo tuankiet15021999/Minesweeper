@@ -1,0 +1,39 @@
+<div class="container mt-5">
+  <div class="table-responsive">
+    <table class="table table-striped table-bordered">
+      <thead class="table-dark">
+        <tr>
+          <th>No</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Width</th>
+          <th>Height</th>
+          <th>Num of Mines</th>
+          <th>Created At</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @boards.each do |row| %>
+          <tr>
+            <td><%=row.id%></td>
+            <td><%= link_to row.name, board_url(row), class: "text-decoration-none text-primary" %></td>
+            <td><%= row.user.email %></td>
+            <td><%= row.width %></td>
+            <td><%= row.height %></td>
+            <td><%= row.num_of_mines %></td>
+            <td><%= row.created_at.strftime("%d-%m-%Y %H:%M:%S") %></td>
+          </tr>
+        <% end %>
+      </tbody>
+      <tfoot>
+        <tr>
+        <td colspan="7">
+          <%= link_to boards_path, id: "btn-view-all-board" do %>
+            view all generated boards
+          <% end %>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</div>

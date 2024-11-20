@@ -74,3 +74,7 @@ end
 
 # Pagination
 gem "kaminari"
+
+# Style
+gem "bootstrap", "~> 5.3.0"
+gem "sassc-rails"

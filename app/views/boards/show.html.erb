@@ -1,0 +1,34 @@
+<div class="card mb-4">
+    <div class="card-header bg-success text-white">
+      <h3 class="mb-0">
+        <%= link_to home_path, class: 'text-white' do %>
+          <i class="fas fa-arrow-left"></i>
+        <% end %>
+        <%=@board.name %>
+      </h3>
+    </div>
+    <div class="card-body">
+      <p><strong>Email:</strong> <%= @board.user.email %></p>
+      <p><strong>Size:</strong> <%= "#{@board.width}x#{@board.height}" %></p>
+      <p><strong>Number of Mines:</strong> <%= @board.num_of_mines %></p>
+      <p><strong>Created At:</strong> <%= @board.created_at.strftime("%d-%m-%Y %H:%M:%S") %></p>
+    </div>
+</div>
+<div class="board-game-container">
+  <table border="1" id="board-game-table" class="table">
+  <% @data.each do |row| %>
+      <tr>
+        <%row.each do |value|%>
+          <%if value.present?%>
+          <td class="bomb-cell">
+            <i class="fa-solid fa-bomb"></i>
+          </td>
+          <%else%>
+          <td class="cell">
+          </td>
+          <%end%>
+        <%end%>
+      </tr>
+  <% end %>
+  </table>
+</div>

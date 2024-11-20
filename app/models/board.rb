@@ -1,4 +1,29 @@
 class Board < ApplicationRecord
   belongs_to :user
-  has_many :mines
+  has_many :mines, dependent: :destroy
+
+  validates :name, :width, :height, :num_of_mines, presence: true
+  validates :name, uniqueness: true
+  validates :width, :height, :num_of_mines, numericality: { greater_than_or_equal_to: 1 }
+  validate :check_num_of_mines
+
+  after_create :generate_mines
+
+
+  def generate_mines
+    col_num = self.width
+    row_num = self.height
+    bombs = self.num_of_mines
+
+    all_positions = (1..col_num).to_a.product((1..row_num).to_a).shuffle
+    
+    bombs_arr = all_positions.take(bombs).map { |x, y| {x: x, y: y} }
+    
+    self.mines.insert_all(bombs_arr)
+  end
+
+  def check_num_of_mines
+    max_mines = width.to_i*height.to_i
+    errors.add(:num_of_mines, "must be less than equal #{max_mines}") if num_of_mines > max_mines
+  end
 end

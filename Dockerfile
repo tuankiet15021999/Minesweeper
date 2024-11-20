@@ -1,7 +1,7 @@
 FROM ruby:3.0.0-alpine
 
 # Install bare dependencies
-RUN apk --update add build-base mysql-dev libxml2 libxslt gcompat tzdata dcron bash libffi-dev vips-dev
+RUN apk --update add build-base mysql-dev libxml2 libxslt gcompat tzdata dcron bash libffi-dev vips-dev nodejs yarn
 ENV RAILS_ROOT /myapp
 
 RUN mkdir $RAILS_ROOT
