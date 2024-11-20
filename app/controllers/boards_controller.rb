@@ -42,15 +42,11 @@ class BoardsController < ApplicationController
   end
 
   def generate_two_dimensional_array(board)
-    data = []
-    mines = board.mines.pluck(:x, :y).to_set
-    (1..board.width).each do |row|
-      row_data = []
-      (1..board.height).each do |col|
-        row_data<<mines.include?([row, col])
-      end
-      data<<row_data
+    init_two_dimensional_array = Array.new(board.width) { Array.new(board.height, false) }
+    mines = board.mines
+    mines.each do |mine|
+      init_two_dimensional_array[mine.x-1][mine.y-1] = true
     end
-    return data
+    return init_two_dimensional_array
   end
 end

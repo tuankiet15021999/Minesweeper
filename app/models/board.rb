@@ -14,10 +14,14 @@ class Board < ApplicationRecord
     col_num = self.width
     row_num = self.height
     bombs = self.num_of_mines
-
-    all_positions = (1..col_num).to_a.product((1..row_num).to_a).shuffle
-    
-    bombs_arr = all_positions.take(bombs).map { |x, y| {x: x, y: y} }
+    bombs_arr = []
+    bomb_hash = {}
+    while bombs_arr.size <= bombs
+      bomb_position = {x: 1+rand(col_num), y: 1+rand(row_num)}
+      next if bomb_hash[[bomb_position[:x], bomb_position[:y]]]
+      bomb_hash[[bomb_position[:x], bomb_position[:y]]] = true
+      bombs_arr << bomb_position
+    end
     
     self.mines.insert_all(bombs_arr)
   end
