@@ -1,7 +1,16 @@
-FROM ruby:3.0.0-alpine
+FROM ruby:3.3.6
 
 # Install bare dependencies
-RUN apk --update add build-base mysql-dev libxml2 libxslt gcompat tzdata dcron bash libffi-dev vips-dev nodejs yarn
+RUN apt-get update -qq && \
+    apt-get install -y \
+    ffmpeg \
+    cron \
+    libsqlite3-dev \
+    nodejs \
+    yarn \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
 ENV RAILS_ROOT /myapp
 
 RUN mkdir $RAILS_ROOT

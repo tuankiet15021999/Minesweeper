@@ -14,17 +14,16 @@ class Board < ApplicationRecord
     col_num = self.width
     row_num = self.height
     bombs = self.num_of_mines
-    bombs_arr = []
-    bomb_hash = {}
-    while bombs_arr.size <= bombs
-      bomb_position = {x: 1+rand(col_num), y: 1+rand(row_num)}
-      next if bomb_hash[[bomb_position[:x], bomb_position[:y]]]
-      bomb_hash[[bomb_position[:x], bomb_position[:y]]] = true
-      bombs_arr << bomb_position
+  
+    bomb_positions = Set.new
+    while bomb_positions.size < bombs
+      bomb_positions << [rand(1..col_num), rand(1..row_num)]
     end
-    
+  
+    bombs_arr = bomb_positions.map { |x, y| { x: x, y: y } }
     self.mines.insert_all(bombs_arr)
   end
+  
 
   def check_num_of_mines
     max_mines = width.to_i*height.to_i

@@ -20,14 +20,14 @@ default: &default
 
 development:
   <<: *default
-  database: <%= ENV.fetch('DB_NAME_DEV') { 'minesweeper_dev' } %>
+  database: <%= ENV.fetch('DB_NAME_DEV') { 'minesweeper_db' } %>
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: <%= ENV.fetch('DB_NAME_TEST') { 'minesweeper_test' } %>
+  database: <%= ENV.fetch('DB_NAME_TEST') { 'minesweeper_db_test' } %>
 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -50,20 +50,5 @@ test:
 # for a full overview on how database connection configuration can be specified.
 #
 production:
-  primary: &primary_production
-    <<: *default
-    url: <%= ENV['JAWSDB_URL'] %>
-    # username: minesweeper
-    # password: <%= ENV["MINESWEEPER_DATABASE_PASSWORD"] %>
-  # cache:
-  #   <<: *primary_production
-  #   database: minesweeper_production_cache
-  #   migrations_paths: db/cache_migrate
-  # queue:
-  #   <<: *primary_production
-  #   database: minesweeper_production_queue
-  #   migrations_paths: db/queue_migrate
-  # cable:
-  #   <<: *primary_production
-  #   database: minesweeper_production_cable
-  #   migrations_paths: db/cable_migrate
+  <<: *default
+  url: <%= ENV['JAWSDB_URL'] %>
