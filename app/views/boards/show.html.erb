@@ -14,25 +14,78 @@
       <p><strong>Created At:</strong> <%= @board.created_at.strftime("%d-%m-%Y %H:%M:%S") %></p>
     </div>
 </div>
+  <%if @board.width * @board.height > 10000%>
+    <button id="load-more-row-btn" data-start-row="<%= @start_row + 100 %>" data-start-col="<%= @start_col + 100%>" class="btn btn-primary">Load More Row</button>
+    <button id="load-more-col-btn" data-start-row="<%= @start_row + 100 %>" data-start-col="<%= @start_col + 100 %>" class="btn btn-primary">Load More Col</button>
+  <%end%>
 <div class="board-game-container">
   <table border="1" id="board-game-table" class="table">
-  <% @data.each do |row| %>
+    <% @data.each do |row| %>
       <tr>
-        <%row.each do |value|%>
-          <%if value.present? && value.is_a?(Integer)%>
-          <td class="cell">
-            <%=value%>
-          </td>
-          <%elsif value.present?%>
+        <% row.each do |value| %>
+          <% if value.present? && value.is_a?(Integer) %>
+            <td class="cell">
+              <%= value %>
+            </td>
+          <% elsif value.present? %>
             <td class="bomb-cell">
-            <i class="fa-solid fa-bomb"></i>
-          </td>
-          <%else%>
-          <td class="cell">
-          </td>
-          <%end%>
-        <%end%>
+              <i class="fa-solid fa-bomb"></i>
+            </td>
+          <% else %>
+            <td class="cell">
+            </td>
+          <% end %>
+        <% end %>
       </tr>
-  <% end %>
+    <% end %>
   </table>
 </div>
+
+<script>
+  document.getElementById("load-more-row-btn").addEventListener("click", function() {
+    const startRow = this.getAttribute("data-start-row");
+    const startCol = this.getAttribute("data-start-col");
+    
+    fetch(`/boards/<%= @board.id %>?start_row=${startRow}&start_col=${startCol}&action_load=loadmore_row`)
+      .then(response => response.text())
+      .then(data => {
+        const table = document.querySelector("#board-game-table");
+        const newRows = new DOMParser().parseFromString(data, "text/html").querySelectorAll("#board-game-table tr");
+        // Append new rows to the table
+        newRows.forEach(row => {
+          const tbody = table.querySelector("tbody")
+          tbody.appendChild(row);
+        });
+        this.setAttribute("data-start-row", parseInt(startRow) + 100);
+        const colButton = document.getElementById("load-more-col-btn");        
+        colButton.setAttribute("data-start-row", parseInt(startRow) + 100);
+      })
+      .catch(error => console.error('Error loading more rows:', error));
+  });
+
+  document.getElementById("load-more-col-btn").addEventListener("click", function() {
+    const startRow = this.getAttribute("data-start-row");
+    const startCol = this.getAttribute("data-start-col");
+    fetch(`/boards/<%= @board.id %>?start_row=${startRow}&start_col=${startCol}&action_load=loadmore_col`)
+      .then(response => response.text())
+      .then(data => {
+        const table = document.querySelector("#board-game-table");
+        const newRows = new DOMParser().parseFromString(data, "text/html").querySelectorAll("#board-game-table tr");
+        const rows = table.querySelectorAll("tr");
+        
+        // Append new cols to the td of table
+        newRows.forEach((newRow, index) => {
+          const oldRow = rows[index];
+          const newCells = newRow.querySelectorAll("td");
+
+          newCells.forEach(cell => {
+            oldRow.appendChild(cell);
+          });
+        });
+        this.setAttribute("data-start-col", parseInt(startCol) + 100);
+        const rowButton = document.getElementById("load-more-row-btn");        
+        rowButton.setAttribute("data-start-col", parseInt(startCol) + 100);
+      })
+      .catch(error => console.error('Error loading more rows:', error));
+  });
+</script>
