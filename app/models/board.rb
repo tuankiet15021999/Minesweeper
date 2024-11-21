@@ -17,7 +17,7 @@ class Board < ApplicationRecord
   
     bomb_positions = Set.new
     while bomb_positions.size < bombs
-      bomb_positions << [rand(1..col_num), rand(1..row_num)]
+      bomb_positions << [rand(col_num), rand(row_num)]
     end
   
     bombs_arr = bomb_positions.map { |x, y| { x: x, y: y } }

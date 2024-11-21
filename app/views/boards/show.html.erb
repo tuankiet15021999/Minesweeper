@@ -19,8 +19,12 @@
   <% @data.each do |row| %>
       <tr>
         <%row.each do |value|%>
-          <%if value.present?%>
-          <td class="bomb-cell">
+          <%if value.present? && value.is_a?(Integer)%>
+          <td class="cell">
+            <%=value%>
+          </td>
+          <%elsif value.present?%>
+            <td class="bomb-cell">
             <i class="fa-solid fa-bomb"></i>
           </td>
           <%else%>
@@ -32,3 +36,8 @@
   <% end %>
   </table>
 </div>
+
+<script>
+  console.log("HELLO");
+  
+</script>
