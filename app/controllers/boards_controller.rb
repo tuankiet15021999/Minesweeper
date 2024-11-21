@@ -42,13 +42,13 @@ class BoardsController < ApplicationController
   end
 
   def generate_two_dimensional_array(board)
-    init_two_dimensional_array = Array.new(board.width) { Array.new(board.height, false) }
+    init_two_dimensional_array = Array.new(board.height) { Array.new(board.width, false) }
     mines = board.mines
     mines.each do |mine|
       init_two_dimensional_array[mine.x][mine.y] = true
     end
 
-    header_row = [""] + (1..board.height).to_a
+    header_row = [""] + (1..board.width).to_a
 
     result = init_two_dimensional_array.map.with_index do |row, index|
       [index + 1] + row
