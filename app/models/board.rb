@@ -11,13 +11,13 @@ class Board < ApplicationRecord
 
 
   def generate_mines
-    col_num = self.width
-    row_num = self.height
     bombs = self.num_of_mines
   
     bomb_positions = Set.new
     while bomb_positions.size < bombs
-      bomb_positions << [rand(row_num), rand(col_num)]
+      x = rand(1...self.width)
+      y = rand(1...self.height)
+      bomb_positions << [x, y]
     end
   
     bombs_arr = bomb_positions.map { |x, y| { x: x, y: y } }

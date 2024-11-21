@@ -45,7 +45,7 @@ class BoardsController < ApplicationController
     init_two_dimensional_array = Array.new(board.height) { Array.new(board.width, false) }
     mines = board.mines
     mines.each do |mine|
-      init_two_dimensional_array[mine.x][mine.y] = true
+      init_two_dimensional_array[mine.y][mine.x] = true
     end
 
     header_row = [""] + (1..board.width).to_a
