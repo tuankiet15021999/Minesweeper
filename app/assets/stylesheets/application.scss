@@ -124,6 +124,13 @@ td.cell:hover {
   background-color: lightgray;
 }
 
+.btn-loadmore-action {
+  top: 0;
+  position: sticky;
+  padding: 10px;
+  background: whitesmoke;
+}
+
 /* Pagination */
 .pagination span a {
   padding: 10px;

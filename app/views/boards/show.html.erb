@@ -15,8 +15,10 @@
     </div>
 </div>
   <%if @board.width * @board.height > 10000%>
+  <div id="btn-load-action">
     <button id="load-more-row-btn" data-start-row="<%= @start_row + 100 %>" data-start-col="<%= @start_col + 100%>" class="btn btn-primary">Load More Row</button>
     <button id="load-more-col-btn" data-start-row="<%= @start_row + 100 %>" data-start-col="<%= @start_col + 100 %>" class="btn btn-primary">Load More Col</button>
+  </div>
   <%end%>
 <div class="board-game-container">
   <table border="1" id="board-game-table" class="table">
