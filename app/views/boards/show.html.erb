@@ -15,7 +15,7 @@
     </div>
 </div>
   <%if @board.width * @board.height > 10000%>
-  <div id="btn-load-action">
+  <div id="btn-loadmore-action">
     <button id="load-more-row-btn" data-start-row="<%= @start_row + 100 %>" data-start-col="<%= @start_col + 100%>" class="btn btn-primary">Load More Row</button>
     <button id="load-more-col-btn" data-start-row="<%= @start_row + 100 %>" data-start-col="<%= @start_col + 100 %>" class="btn btn-primary">Load More Col</button>
   </div>
@@ -47,7 +47,7 @@
   document.getElementById("load-more-row-btn").addEventListener("click", function() {
     const startRow = this.getAttribute("data-start-row");
     const startCol = this.getAttribute("data-start-col");
-    
+    this.setAttribute("disabled", true)
     fetch(`/boards/<%= @board.id %>?start_row=${startRow}&start_col=${startCol}&action_load=loadmore_row`)
       .then(response => response.text())
       .then(data => {
@@ -61,13 +61,19 @@
         this.setAttribute("data-start-row", parseInt(startRow) + 100);
         const colButton = document.getElementById("load-more-col-btn");        
         colButton.setAttribute("data-start-row", parseInt(startRow) + 100);
+        this.removeAttribute("disabled")
       })
-      .catch(error => console.error('Error loading more rows:', error));
+      .catch(error => {
+        this.removeAttribute("disabled")
+        console.error('Error loading more rows:', error)
+      })
   });
 
   document.getElementById("load-more-col-btn").addEventListener("click", function() {
     const startRow = this.getAttribute("data-start-row");
     const startCol = this.getAttribute("data-start-col");
+    this.setAttribute("disabled", true)
+
     fetch(`/boards/<%= @board.id %>?start_row=${startRow}&start_col=${startCol}&action_load=loadmore_col`)
       .then(response => response.text())
       .then(data => {
@@ -87,7 +93,11 @@
         this.setAttribute("data-start-col", parseInt(startCol) + 100);
         const rowButton = document.getElementById("load-more-row-btn");        
         rowButton.setAttribute("data-start-col", parseInt(startCol) + 100);
+        this.removeAttribute("disabled")
       })
-      .catch(error => console.error('Error loading more rows:', error));
+      .catch(error => {
+        this.removeAttribute("disabled")
+        console.error('Error loading more cols:', error)
+      })
   });
 </script>
