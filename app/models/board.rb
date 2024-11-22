@@ -15,8 +15,8 @@ class Board < ApplicationRecord
   
     bomb_positions = Set.new
     while bomb_positions.size < bombs
-      x = rand(1...self.width)
-      y = rand(1...self.height)
+      x = rand(1...(self.width+1))
+      y = rand(1...(self.height+1))
       bomb_positions << [x, y]
     end
   

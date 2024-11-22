@@ -9,7 +9,7 @@
       </ul>
     </div>
   <% end %>
-  <%= form_with(model: @board, method: :post, local: true, class: "needs-validation") do |f| %>
+  <%= form_with(model: @board, method: :post, local: true, class: "needs-validation", id: "board-form") do |f| %>
     <div class="form-group mb-3">
       <%= f.label :email, "Email", class: "form-label" %>
       <%= f.email_field :email, class: "form-control", required: true , value: @user&.email%>
@@ -20,18 +20,18 @@
     </div>
     <div class="form-group mb-3">
       <%= f.label :width, "Width", class: "form-label" %>
-      <%= f.number_field :width, class: "form-control", required: true, min: 1 %>
+      <%= f.number_field :width, class: "form-control", required: true, min: 1, max: 2147483647%>
     </div>
     <div class="form-group mb-3">
       <%= f.label :height, "Height", class: "form-label" %>
-      <%= f.number_field :height, class: "form-control", required: true, min: 1 %>
+      <%= f.number_field :height, class: "form-control", required: true, min: 1, max: 2147483647 %>
     </div>
     <div class="form-group mb-3">
       <%= f.label :num_of_mines, "Number of Mines", class: "form-label" %>
-      <%= f.number_field :num_of_mines, class: "form-control", required: true, min: 1 %>
+      <%= f.number_field :num_of_mines, class: "form-control", required: true, min: 1, max: 2147483647 %>
     </div>
     <div class="form-group">
-      <%= f.submit "Generate Board", class: "btn btn-primary w-100" %>
+      <%= f.submit "Generate Board", class: "btn btn-primary w-100", id: "submit-button" %>
     </div>
   <% end %>
   <div id="home-link">
@@ -40,3 +40,15 @@
     <% end %>
   <div>
 </div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const form = document.getElementById("board-form");
+    const submitButton = document.getElementById("submit-button");
+    
+    form.addEventListener("submit", function(event) {
+      submitButton.setAttribute("disabled", true);
+      submitButton.setAttribute("value", "Generating...");
+    });
+  });
+</script>

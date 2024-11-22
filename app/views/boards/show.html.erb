@@ -48,6 +48,8 @@
     const startRow = this.getAttribute("data-start-row");
     const startCol = this.getAttribute("data-start-col");
     this.setAttribute("disabled", true)
+    const colButton = document.getElementById("load-more-col-btn");        
+    colButton.setAttribute("disabled", true)
     fetch(`/boards/<%= @board.id %>?start_row=${startRow}&start_col=${startCol}&action_load=loadmore_row`)
       .then(response => response.text())
       .then(data => {
@@ -59,12 +61,13 @@
           tbody.appendChild(row);
         });
         this.setAttribute("data-start-row", parseInt(startRow) + 100);
-        const colButton = document.getElementById("load-more-col-btn");        
         colButton.setAttribute("data-start-row", parseInt(startRow) + 100);
         this.removeAttribute("disabled")
+        colButton.removeAttribute("disabled")
       })
       .catch(error => {
         this.removeAttribute("disabled")
+        colButton.removeAttribute("disabled")
         console.error('Error loading more rows:', error)
       })
   });
@@ -72,8 +75,9 @@
   document.getElementById("load-more-col-btn").addEventListener("click", function() {
     const startRow = this.getAttribute("data-start-row");
     const startCol = this.getAttribute("data-start-col");
+    const rowButton = document.getElementById("load-more-row-btn");        
     this.setAttribute("disabled", true)
-
+    rowButton.setAttribute("disabled", true)
     fetch(`/boards/<%= @board.id %>?start_row=${startRow}&start_col=${startCol}&action_load=loadmore_col`)
       .then(response => response.text())
       .then(data => {
@@ -91,12 +95,13 @@
           });
         });
         this.setAttribute("data-start-col", parseInt(startCol) + 100);
-        const rowButton = document.getElementById("load-more-row-btn");        
         rowButton.setAttribute("data-start-col", parseInt(startCol) + 100);
         this.removeAttribute("disabled")
+        rowButton.removeAttribute("disabled")
       })
       .catch(error => {
         this.removeAttribute("disabled")
+        rowButton.removeAttribute("disabled")
         console.error('Error loading more cols:', error)
       })
   });
